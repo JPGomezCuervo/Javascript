@@ -14,6 +14,10 @@ class Nest {
   _receive(msg, from) {
     this.messagesReceived.push({ msg, from });
   }
+
+  _ping() {
+    return "pong";
+  }
 }
 
 class Neighborhood {
@@ -49,10 +53,26 @@ class Neighborhood {
       }, 2500);
     });
     process
-      .then((res)=> {
-        console.log(res)
-    }).then(()=> receiver._receive)
+      .then((res) => {
+        console.log(res);
+      })
+      .then(() => receiver._receive)
       .catch((err) => console.log("Hubo un error"));
+  }
+
+  ping() {
+    this.neighborhood.forEach((nest, index) => {
+      const obstacles = Math.random() * 3 > 1;
+      const delay = Math.random() * 5000;
+      setTimeout(() => {
+        const sendPing = new Promise((resolve, reject) => {
+          obstacles ? reject("hubo un error") : resolve(nest._ping());
+        });
+        sendPing
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err));
+      }, delay);
+    });
   }
 }
 
@@ -62,6 +82,4 @@ hambak.createNest("arco iris");
 hambak.createNest("lolis");
 hambak.createNest("iris");
 
-hambak.messageToFrom("arco iris", "lolis", "este es un mensaje de prueba");
-
-// hambak.MessageTo("lolis", "un saludo");
+hambak.ping();
