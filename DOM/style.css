@@ -1,0 +1,14 @@
+.background {
+    background-color: pink;
+    height: 500px;
+    width: 500px;
+}
+
+#player {
+    position: relative;
+    height: 50px;
+    width: 30px;
+    top: 0px;
+    left: 400px;
+    background-color: gray;
+}
